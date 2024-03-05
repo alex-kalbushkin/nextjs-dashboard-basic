@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
   const searchParams = useSearchParams();

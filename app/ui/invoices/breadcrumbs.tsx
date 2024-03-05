@@ -1,36 +1,32 @@
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '../fonts';
 
-interface Breadcrumb {
-  label: string;
+interface IBreadcrumbItem {
   href: string;
+  label: string;
   active?: boolean;
 }
 
-export default function Breadcrumbs({
-  breadcrumbs,
-}: {
-  breadcrumbs: Breadcrumb[];
-}) {
-  return (
-    <nav aria-label="Breadcrumb" className="mb-6 block">
-      <ol className={clsx(lusitana.className, 'flex text-xl md:text-2xl')}>
-        {breadcrumbs.map((breadcrumb, index) => (
-          <li
-            key={breadcrumb.href}
-            aria-current={breadcrumb.active}
-            className={clsx(
-              breadcrumb.active ? 'text-gray-900' : 'text-gray-500',
-            )}
-          >
-            <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
-            {index < breadcrumbs.length - 1 ? (
-              <span className="mx-3 inline-block">/</span>
-            ) : null}
-          </li>
-        ))}
-      </ol>
-    </nav>
-  );
-}
+const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: IBreadcrumbItem[] }) => (
+  <nav aria-label="Breadcrumb" className="mb-[24px] block">
+    <ol className={clsx(lusitana.className, 'flex text-xl md:text-2xl')}>
+      {breadcrumbs.map((breadcrumbItem, breadcrumbItemIndex) => (
+        <li
+          key={breadcrumbItem.href}
+          aria-current={breadcrumbItem.active}
+          className={clsx(
+            breadcrumbItem.active ? 'text-gray-800 ' : 'r text-gray-500',
+          )}
+        >
+          <Link href={breadcrumbItem.href}>{breadcrumbItem.label}</Link>
+          {breadcrumbItemIndex < breadcrumbs.length - 1 ? (
+            <span className="mx-3 inline-block">/</span>
+          ) : null}
+        </li>
+      ))}
+    </ol>
+  </nav>
+);
+
+export default Breadcrumbs;
