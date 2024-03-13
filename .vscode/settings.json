@@ -1,4 +1,4 @@
 {
-  "cSpell.words": ["clsx", "heroicons", "lusitana", "sidenav"],
+  "cSpell.words": ["clsx", "heroicons", "lusitana", "sidenav", "tailwindcss"],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
