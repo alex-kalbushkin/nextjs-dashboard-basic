@@ -5,7 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export interface ICreateInvoiceFormState {
+export interface IInvoiceFormState {
   message?: string | null;
   errors?: {
     customerId?: string[];
@@ -28,7 +28,7 @@ const formInvoiceSchema = z
   .required({ customerId: true, amount: true, status: true });
 
 export async function createInvoices(
-  formState: ICreateInvoiceFormState,
+  formState: IInvoiceFormState,
   formData: FormData,
 ) {
   const rawFormData = Object.fromEntries(formData.entries());
@@ -62,10 +62,23 @@ export async function createInvoices(
   redirect('/dashboard/invoices');
 }
 
-export async function editInvoice(id: string, formData: FormData) {
+export async function editInvoice(
+  id: string,
+  formState: IInvoiceFormState,
+  formData: FormData,
+) {
   const rawFormData = Object.fromEntries(formData.entries());
 
-  const { amount, customerId, status } = formInvoiceSchema.parse(rawFormData);
+  const validateFields = formInvoiceSchema.safeParse(rawFormData);
+
+  if (!validateFields.success) {
+    return {
+      message: 'Failed to Create Invoice.',
+      errors: validateFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { amount, customerId, status } = validateFields.data;
 
   const amountInCents = amount * 100;
 

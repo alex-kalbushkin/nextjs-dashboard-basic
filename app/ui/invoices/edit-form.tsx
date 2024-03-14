@@ -9,7 +9,9 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { editInvoice } from '@/app/lib/actions';
+import { IInvoiceFormState, editInvoice } from '@/app/lib/actions';
+import { useFormState } from 'react-dom';
+import { ErrorMessages } from '../error-messages';
 
 export default function EditInvoiceForm({
   invoice,
@@ -20,8 +22,12 @@ export default function EditInvoiceForm({
 }) {
   const editInvoiceWithId = editInvoice.bind(null, invoice.id);
 
+  const initialState: IInvoiceFormState = { message: '', errors: {} };
+
+  const [state, dispatch] = useFormState(editInvoiceWithId, initialState);
+
   return (
-    <form action={editInvoiceWithId}>
+    <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -46,6 +52,11 @@ export default function EditInvoiceForm({
             </select>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
+
+          <ErrorMessages
+            ariaDescribedBy="error-customer"
+            errors={state.errors?.customerId}
+          />
         </div>
 
         {/* Invoice Amount */}
@@ -67,6 +78,11 @@ export default function EditInvoiceForm({
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
+
+          <ErrorMessages
+            ariaDescribedBy="error-amount"
+            errors={state.errors?.amount}
+          />
         </div>
 
         {/* Invoice Status */}
@@ -109,6 +125,11 @@ export default function EditInvoiceForm({
                 </label>
               </div>
             </div>
+
+            <ErrorMessages
+              ariaDescribedBy="error-status"
+              errors={state.errors?.status}
+            />
           </div>
         </fieldset>
       </div>

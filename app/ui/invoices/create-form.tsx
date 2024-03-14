@@ -1,7 +1,7 @@
 'use client';
 
 import { CustomerField } from '@/app/lib/definitions';
-import { ICreateInvoiceFormState, createInvoices } from '@/app/lib/actions';
+import { IInvoiceFormState, createInvoices } from '@/app/lib/actions';
 import Link from 'next/link';
 import {
   CheckIcon,
@@ -14,7 +14,7 @@ import { useFormState } from 'react-dom';
 import { ErrorMessages } from '../error-messages';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
-  const initialFormState: ICreateInvoiceFormState = { message: '', errors: {} };
+  const initialFormState: IInvoiceFormState = { message: '', errors: {} };
 
   const [state, dispatch] = useFormState(createInvoices, initialFormState);
 
