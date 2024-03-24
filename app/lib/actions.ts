@@ -1,9 +1,11 @@
 'use server';
 
-import { z } from 'zod';
+import { signIn } from '@/auth';
 import { sql } from '@vercel/postgres';
+import { AuthError } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 export interface IInvoiceFormState {
   message?: string | null;
@@ -109,5 +111,22 @@ export async function deleteInvoice(id: string, formData: FormData) {
     return {
       message: 'Database Error: Failed to Delete Invoice',
     };
+  }
+}
+
+export async function authenticate(
+  formState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      return error.type === 'CredentialsSignin'
+        ? 'Invalid credentials'
+        : 'Something went wrong';
+    }
+
+    throw error;
   }
 }
