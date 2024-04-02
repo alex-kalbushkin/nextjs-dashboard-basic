@@ -2,6 +2,11 @@ import { fetchCustomers, fetchInvoiceById } from '@/app/lib/data';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import Form from '@/app/ui/invoices/edit-form';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+  title: 'Invoice edit',
+};
 
 const InvoiceEdit = async ({ params: { id } }: { params: { id: string } }) => {
   const [invoice, customers] = await Promise.all([

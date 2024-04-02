@@ -1,5 +1,14 @@
 import React from 'react';
 import SideNav from '@/app/ui/dashboard/sidenav';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Dashboard Page',
+    default: 'Dashboard Page',
+  },
+  description: 'Base dashboard page',
+};
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

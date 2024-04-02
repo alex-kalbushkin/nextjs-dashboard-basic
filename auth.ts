@@ -6,7 +6,7 @@ import { string, z } from 'zod';
 import { User } from './app/lib/definitions';
 import { authConfig } from './auth.config';
 
-const getUserFormDataBase = async (
+const getUserFromDataBase = async (
   email: string,
 ): Promise<User | undefined> => {
   try {
@@ -36,7 +36,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
-          const user = await getUserFormDataBase(email);
+          const user = await getUserFromDataBase(email);
 
           if (!user) {
             return null;

@@ -1,6 +1,12 @@
 import React from 'react';
 import AcmeLogo from '../ui/acme-logo';
 import LoginForm from '../ui/login-form';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+  title: 'Login page | Dashboard Next',
+  description: "Dashboard's login page",
+};
 
 const Login = () => {
   return (
